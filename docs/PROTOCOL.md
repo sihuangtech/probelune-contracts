@@ -42,3 +42,9 @@ History exposes separate availability (`success / (success + failure)`) and cove
 ## Access policy
 
 Checks are structured data, never commands. HTTP permits GET/HEAD only, TLS verification defaults on, no proxy environment is inherited, redirects are limited and cross-origin custom headers are stripped. Resolve and validate all candidate IPs before dialing. Private, loopback, link-local, multicast and special networks are blocked unless the administrator adds explicit allowed CIDRs. CIDRs are a deliberate trust grant, not a DNS name allowlist. DNS resolvers on private networks need their own CIDR permission. Nodes should run unprivileged, with only the capabilities needed for ICMP/MTR.
+
+## Optional certificate assertion
+
+`certificate_min_days` defaults to 0 (disabled), or accepts 1–365. Supporting nodes advertise `certificate_expiry`. The panel does not assign this check to a node lacking that capability. An insufficient remaining lifetime returns a target assertion failure at `certificate_expiry` while preserving HTTP status and certificate evidence. Explicit TLS bypass remains visible in the result.
+
+The local node credential file also binds its dashboard URL; changing that URL requires explicit registration rather than forwarding an old token. System DNS resolvers are trusted host configuration; custom private resolver addresses require a CIDR grant.

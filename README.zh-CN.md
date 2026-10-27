@@ -7,7 +7,7 @@
 需要 Go 1.27 或更新版本：
 
 ```sh
-go get github.com/sihuangtech/probelune-contracts@v0.1.0
+go get github.com/sihuangtech/probelune-contracts@v0.1.1
 ```
 
 - 面板后端和探测节点直接引用带版本号的 Go 模块。

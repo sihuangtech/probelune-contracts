@@ -52,3 +52,5 @@ Monitor fields are specified in `models.go`. Continuous types: HTTP, TCP, ICMP (
 - GET `/healthz` (outside API prefix): process health/version, no credentials.
 
 Webhook receivers verify `X-Probelune-Signature` according to the dashboard notification implementation and reject stale timestamps. SMTP requires TLS or STARTTLS. FCM uses the deployer's Firebase service account; native clients must belong to the same Firebase project. No shared hosted push service is provided.
+
+Login/pair responses and overview include a stable `instance_id` for matching native notifications across LAN/public URL aliases. It is not a credential. Notification channels accept `reminder_minutes` (0 disables; 1–1440); maintenance/silence and confirmed recovery suppress further reminders.

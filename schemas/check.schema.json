@@ -15,6 +15,7 @@
     "contains": {"type": "string", "maxLength": 4096},
     "follow_redirects": {"type": "boolean", "default": false},
     "insecure_tls": {"type": "boolean", "default": false},
+    "certificate_min_days": {"type": "integer", "minimum": 0, "maximum": 365, "default": 0},
     "dns_record": {"enum": ["A", "AAAA", "CNAME", "MX", "TXT", "NS", "SOA"]},
     "resolver": {"type": "string"},
     "expected_dns": {"type": "string"},

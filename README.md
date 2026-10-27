@@ -9,7 +9,7 @@ Versioned Go models, validation and network access policy for **Probelune (å·¡æ±
 Requires Go 1.27 or newer.
 
 ```sh
-go get github.com/sihuangtech/probelune-contracts@v0.1.0
+go get github.com/sihuangtech/probelune-contracts@v0.1.1
 ```
 
 ```go
