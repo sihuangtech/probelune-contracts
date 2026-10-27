@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/sihuangtech/probelune-contracts/schemas/check.schema.json",
+  "title": "Probelune v1 Check",
+  "type": "object",
+  "required": ["type", "target"],
+  "properties": {
+    "type": {"enum": ["http", "tcp", "ping", "dns", "mtr", "traceroute"]},
+    "target": {"type": "string", "minLength": 1},
+    "port": {"type": "integer", "minimum": 0, "maximum": 65535},
+    "timeout": {"type": "integer", "minimum": 1, "maximum": 60, "default": 10},
+    "method": {"enum": ["GET", "HEAD"], "default": "GET"},
+    "headers": {"type": "object", "maxProperties": 32, "additionalProperties": {"type": "string", "maxLength": 4096}},
+    "expected_status": {"type": "integer", "minimum": 0, "maximum": 599},
+    "contains": {"type": "string", "maxLength": 4096},
+    "follow_redirects": {"type": "boolean", "default": false},
+    "insecure_tls": {"type": "boolean", "default": false},
+    "dns_record": {"enum": ["A", "AAAA", "CNAME", "MX", "TXT", "NS", "SOA"]},
+    "resolver": {"type": "string"},
+    "expected_dns": {"type": "string"},
+    "count": {"type": "integer", "minimum": 1, "maximum": 20, "default": 4},
+    "size": {"type": "integer", "minimum": 16, "maximum": 1400, "default": 32},
+    "max_loss": {"type": "number", "minimum": 0, "maximum": 100},
+    "family": {"enum": ["auto", "ipv4", "ipv6"]},
+    "retries": {"type": "integer", "minimum": 0, "maximum": 2}
+  }
+}

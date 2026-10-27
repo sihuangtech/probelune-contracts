@@ -1,0 +1,263 @@
+openapi: 3.1.0
+info:
+  title: Probelune Dashboard and Node API
+  version: 0.1.0
+  description: Wire reference for protocol v1. See docs/API.md and docs/PROTOCOL.md for roles, state semantics and field definitions.
+  license:
+    name: GPL-3.0-or-later
+    identifier: GPL-3.0-or-later
+servers:
+  - url: /api/v1
+security:
+  - bearerAuth: []
+  - sessionCookie: []
+paths:
+  /auth/status:
+    get:
+      security: []
+      summary: Determine whether initial setup is complete
+      responses: {'200': {$ref: '#/components/responses/JSON'}}
+  /auth/setup:
+    post:
+      security: []
+      summary: Create first admin using the server setup token
+      parameters: [{in: header, name: X-Setup-Token, required: true, schema: {type: string}}]
+      requestBody: {$ref: '#/components/requestBodies/Login'}
+      responses: {'200': {$ref: '#/components/responses/JSON'}, '403': {$ref: '#/components/responses/Error'}}
+  /auth/login:
+    post:
+      security: []
+      summary: Create authenticated session
+      requestBody: {$ref: '#/components/requestBodies/Login'}
+      responses: {'200': {$ref: '#/components/responses/JSON'}, '401': {$ref: '#/components/responses/Error'}}
+  /auth/me:
+    get:
+      summary: Read current sanitized user
+      responses: {'200': {$ref: '#/components/responses/JSON'}}
+  /auth/logout:
+    post:
+      summary: Revoke current session
+      responses: {'204': {description: Revoked}}
+  /auth/sessions:
+    get:
+      summary: List own sessions
+      responses: {'200': {$ref: '#/components/responses/JSON'}}
+  /auth/sessions/{id}:
+    parameters: [{$ref: '#/components/parameters/ID'}]
+    delete:
+      summary: Revoke owned session
+      responses: {'204': {description: Revoked}}
+  /auth/pair:
+    post:
+      summary: Generate one-time pairing code
+      responses: {'201': {$ref: '#/components/responses/JSON'}}
+  /auth/pair/exchange:
+    post:
+      security: []
+      summary: Consume pairing code
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {type: object, required: [code], properties: {code: {type: string}}}
+      responses: {'200': {$ref: '#/components/responses/JSON'}, '401': {$ref: '#/components/responses/Error'}}
+  /overview:
+    get:
+      summary: Read current observation network
+      responses: {'200': {$ref: '#/components/responses/JSON'}}
+  /monitors:
+    get:
+      summary: List sanitized monitors and live states
+      responses: {'200': {$ref: '#/components/responses/JSON'}}
+    post:
+      summary: Create monitor (admin/operator)
+      requestBody: {$ref: '#/components/requestBodies/Object'}
+      responses: {'200': {$ref: '#/components/responses/JSON'}}
+  /monitors/{id}:
+    parameters: [{$ref: '#/components/parameters/ID'}]
+    put:
+      summary: Update monitor using current configuration version
+      requestBody: {$ref: '#/components/requestBodies/Object'}
+      responses: {'200': {$ref: '#/components/responses/JSON'}, '409': {$ref: '#/components/responses/Error'}}
+  /monitors/{id}/history:
+    parameters: [{$ref: '#/components/parameters/ID'}]
+    get:
+      summary: Raw history, aggregate buckets, availability and coverage
+      parameters:
+        - {in: query, name: hours, schema: {type: integer, minimum: 1, maximum: 8760, default: 24}}
+        - {in: query, name: limit, schema: {type: integer, minimum: 1, maximum: 1000, default: 300}}
+        - {in: query, name: offset, schema: {type: integer, minimum: 0, default: 0}}
+        - {in: query, name: node_id, schema: {type: string}}
+      responses: {'200': {$ref: '#/components/responses/JSON'}}
+  /nodes:
+    get:
+      summary: List sanitized nodes
+      responses: {'200': {$ref: '#/components/responses/JSON'}}
+    post:
+      summary: Create node and one-time registration token (admin)
+      requestBody: {$ref: '#/components/requestBodies/Object'}
+      responses: {'201': {$ref: '#/components/responses/JSON'}}
+  /nodes/{id}:
+    parameters: [{$ref: '#/components/parameters/ID'}]
+    put:
+      summary: Update node labels, enablement and CIDR policy (admin)
+      requestBody: {$ref: '#/components/requestBodies/Object'}
+      responses: {'200': {$ref: '#/components/responses/JSON'}}
+  /nodes/{id}/credentials:
+    parameters: [{$ref: '#/components/parameters/ID'}]
+    post:
+      summary: Rotate or revoke node identity (admin)
+      requestBody: {$ref: '#/components/requestBodies/Object'}
+      responses: {'200': {$ref: '#/components/responses/JSON'}}
+  /diagnostics:
+    get:
+      summary: List recent jobs and results
+      responses: {'200': {$ref: '#/components/responses/JSON'}}
+    post:
+      summary: Create one-off diagnostic jobs (admin/operator)
+      requestBody: {$ref: '#/components/requestBodies/Object'}
+      responses: {'201': {$ref: '#/components/responses/JSON'}}
+  /diagnostics/{id}/cancel:
+    parameters: [{$ref: '#/components/parameters/ID'}]
+    post:
+      summary: Cancel job (admin/operator)
+      responses: {'200': {$ref: '#/components/responses/JSON'}}
+  /incidents:
+    get:
+      summary: Read incident timeline
+      responses: {'200': {$ref: '#/components/responses/JSON'}}
+  /incidents/{id}/actions:
+    parameters: [{$ref: '#/components/parameters/ID'}]
+    post:
+      summary: Acknowledge, silence or annotate (admin/operator)
+      requestBody: {$ref: '#/components/requestBodies/Object'}
+      responses: {'200': {$ref: '#/components/responses/JSON'}}
+  /settings:
+    get:
+      responses: {'200': {$ref: '#/components/responses/JSON'}}
+    put:
+      summary: Update instance settings (admin)
+      requestBody: {$ref: '#/components/requestBodies/Object'}
+      responses: {'200': {$ref: '#/components/responses/JSON'}}
+  /users:
+    get:
+      summary: List members (admin)
+      responses: {'200': {$ref: '#/components/responses/JSON'}}
+    post:
+      summary: Create member (admin)
+      requestBody: {$ref: '#/components/requestBodies/Object'}
+      responses: {'200': {$ref: '#/components/responses/JSON'}}
+  /users/{id}:
+    parameters: [{$ref: '#/components/parameters/ID'}]
+    put:
+      summary: Update member (admin)
+      requestBody: {$ref: '#/components/requestBodies/Object'}
+      responses: {'200': {$ref: '#/components/responses/JSON'}}
+  /channels:
+    get:
+      summary: List sanitized notification channels (admin)
+      responses: {'200': {$ref: '#/components/responses/JSON'}}
+    post:
+      summary: Create channel (admin)
+      requestBody: {$ref: '#/components/requestBodies/Object'}
+      responses: {'200': {$ref: '#/components/responses/JSON'}}
+  /channels/{id}:
+    parameters: [{$ref: '#/components/parameters/ID'}]
+    put:
+      summary: Update channel (admin)
+      requestBody: {$ref: '#/components/requestBodies/Object'}
+      responses: {'200': {$ref: '#/components/responses/JSON'}}
+  /channels/{id}/test:
+    parameters: [{$ref: '#/components/parameters/ID'}]
+    post:
+      summary: Queue notification test (admin)
+      responses: {'202': {$ref: '#/components/responses/JSON'}}
+  /deliveries:
+    get:
+      summary: Inspect delivery outcomes (admin/operator)
+      responses: {'200': {$ref: '#/components/responses/JSON'}}
+  /maintenance:
+    get:
+      responses: {'200': {$ref: '#/components/responses/JSON'}}
+    post:
+      summary: Create maintenance window (admin/operator)
+      requestBody: {$ref: '#/components/requestBodies/Object'}
+      responses: {'201': {$ref: '#/components/responses/JSON'}}
+  /maintenance/{id}:
+    parameters: [{$ref: '#/components/parameters/ID'}]
+    delete:
+      summary: End or remove maintenance (admin/operator)
+      responses: {'204': {description: Ended}}
+  /audit:
+    get:
+      summary: Read audit events (admin)
+      responses: {'200': {$ref: '#/components/responses/JSON'}}
+  /devices:
+    get:
+      summary: List own sanitized push registrations
+      responses: {'200': {$ref: '#/components/responses/JSON'}}
+    post:
+      summary: Register own FCM installation ID
+      requestBody: {$ref: '#/components/requestBodies/Object'}
+      responses: {'200': {$ref: '#/components/responses/JSON'}}
+  /devices/{id}:
+    parameters: [{$ref: '#/components/parameters/ID'}]
+    delete:
+      summary: Remove own device registration
+      responses: {'204': {description: Removed}}
+  /status:
+    get:
+      security: []
+      summary: Read explicitly public status information
+      responses: {'200': {$ref: '#/components/responses/JSON'}, '404': {$ref: '#/components/responses/Error'}}
+  /node/register:
+    post:
+      security: []
+      summary: Exchange node registration token once
+      requestBody: {$ref: '#/components/requestBodies/Object'}
+      responses: {'200': {$ref: '#/components/responses/JSON'}}
+  /node/poll:
+    post:
+      security: [{bearerAuth: [], nodeID: []}]
+      summary: Heartbeat and fetch expiring assignments
+      requestBody: {$ref: '#/components/requestBodies/Object'}
+      responses: {'200': {$ref: '#/components/responses/JSON'}, '409': {$ref: '#/components/responses/Error'}}
+  /node/results:
+    post:
+      security: [{bearerAuth: [], nodeID: []}]
+      summary: Idempotent result batch ingestion
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {type: array, maxItems: 100, items: {type: object}}
+      responses: {'200': {$ref: '#/components/responses/JSON'}}
+components:
+  securitySchemes:
+    bearerAuth: {type: http, scheme: bearer}
+    sessionCookie: {type: apiKey, in: cookie, name: probelune_session}
+    nodeID: {type: apiKey, in: header, name: X-Node-ID}
+  parameters:
+    ID: {in: path, name: id, required: true, schema: {type: string}}
+  schemas:
+    Check: {$ref: './schemas/check.schema.json'}
+    Error: {type: object, required: [error], properties: {error: {type: string}}}
+  requestBodies:
+    Object:
+      required: true
+      content: {application/json: {schema: {type: object}}}
+    Login:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required: [username, password]
+            properties: {username: {type: string}, password: {type: string, format: password}}
+  responses:
+    JSON:
+      description: JSON response; shape defined in docs/API.md and Go models
+      content: {application/json: {schema: {}}}
+    Error:
+      description: Request failed
+      content: {application/json: {schema: {$ref: '#/components/schemas/Error'}}}
