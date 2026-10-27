@@ -41,3 +41,14 @@ go test ./...
 ```
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) and [SECURITY.md](SECURITY.md). Licensed under GPL-3.0-or-later; see [LICENSE](LICENSE).
+
+
+## Star History
+
+[![Star history](https://api.star-history.com/svg?repos=sihuangtech/probelune-contracts&type=Date)](https://star-history.com/#sihuangtech/probelune-contracts&Date)
+
+## Contact
+
+- Developer: [Snake Konginchrist](https://github.com/Snake-Konginchrist)
+- Email: [developer@skstudio.cn](mailto:developer@skstudio.cn)
+- Feedback: [GitHub Issues](https://github.com/sihuangtech/probelune-contracts/issues)

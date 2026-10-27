@@ -22,3 +22,14 @@ go get github.com/sihuangtech/probelune-contracts@v0.1.1
 文档：[节点协议](docs/PROTOCOL.md)、[HTTP API](docs/API.md)、[JSON Schema](schemas/check.schema.json)、[OpenAPI](openapi.yaml)。
 
 开发检查：`go fmt ./...`、`go vet ./...`、`go test ./...`。协议说明以英文为主，代码含必要中文注释。贡献与安全报告方式见 [CONTRIBUTING.md](CONTRIBUTING.md)、[SECURITY.md](SECURITY.md)。许可证为 GPL-3.0-or-later。
+
+
+## 星标历史
+
+[![星标历史](https://api.star-history.com/svg?repos=sihuangtech/probelune-contracts&type=Date)](https://star-history.com/#sihuangtech/probelune-contracts&Date)
+
+## 联系开发者
+
+- 开发者: [Snake Konginchrist](https://github.com/Snake-Konginchrist)
+- 邮箱: [developer@skstudio.cn](mailto:developer@skstudio.cn)
+- 问题反馈: [GitHub Issues](https://github.com/sihuangtech/probelune-contracts/issues)
