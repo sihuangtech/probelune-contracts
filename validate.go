@@ -42,6 +42,9 @@ func (c *Check) Validate() error {
 	if c.Family != "auto" && c.Family != "ipv4" && c.Family != "ipv6" {
 		return fmt.Errorf("不支持的 IP 协议族")
 	}
+	if c.CertificateMinDays < 0 || c.CertificateMinDays > 365 {
+		return fmt.Errorf("证书剩余天数阈值应为 0—365；0 表示关闭")
+	}
 	switch c.Type {
 	case "http":
 		u, err := url.Parse(c.Target)

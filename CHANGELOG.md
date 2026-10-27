@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.1 — 2026-10-28
+
+- Optional `certificate_min_days` assertion (0 disables, 1–365 days); nodes advertise `certificate_expiry` before receiving these checks.
+
 ## 0.1.0 — 2026-10-28
 
 - Initial v1 models for continuous monitoring, node leases and one-off diagnostics.
