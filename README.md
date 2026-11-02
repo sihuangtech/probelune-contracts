@@ -28,7 +28,7 @@ if err := check.Validate(); err != nil {
 - [Check JSON Schema](schemas/check.schema.json)
 - [OpenAPI entry point](openapi.yaml)
 
-The immutable `v0.1.0` tag provides the original v1 models. The current branch also includes the optional certificate-lifetime assertion; consumers requiring that field pin a commit using a Go-generated pseudo-version in `go.mod`. Vue, Electron and Flutter consume its JSON wire representation; they have independent application models and releases. There is no shared JavaScript workspace or sibling-directory dependency in published builds.
+The immutable `v0.1.0` tag provides the original v1 models. The current branch also includes the optional certificate-lifetime assertion; consumers requiring that field use the short `v0.1.0-compat` tag in `go.mod`, which pins the retained implementation without moving `v0.1.0`. Vue, Electron and Flutter consume its JSON wire representation; they have independent application models and releases. There is no shared JavaScript workspace or sibling-directory dependency in published builds.
 
 Protocol version `1` rejects incompatible nodes at polling time. Additive optional fields may be introduced within v1; breaking wire changes require a new protocol major. Module releases follow semantic versioning and retain immutable tags.
 
