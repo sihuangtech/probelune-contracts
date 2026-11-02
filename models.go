@@ -2,7 +2,7 @@
 package contracts
 
 const Protocol = 1
-const Version = "0.1.1"
+const Version = "0.1.0"
 
 type Check struct {
 	Type               string            `json:"type"`

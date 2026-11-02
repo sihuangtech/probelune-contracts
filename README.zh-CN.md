@@ -7,10 +7,10 @@
 需要 Go 1.27 或更新版本：
 
 ```sh
-go get github.com/sihuangtech/probelune-contracts@v0.1.1
+go get github.com/sihuangtech/probelune-contracts@v0.1.0
 ```
 
-- 面板后端和探测节点直接引用带版本号的 Go 模块。
+- `v0.1.0` 标签保留初始 v1 模型；当前分支还包含可选证书有效期断言，面板和节点通过 `go.mod` 固定相应提交的 Go 伪版本。
 - 网页、桌面和 Flutter 按相同 JSON 协议通信，各自维护适合本端的模型。
 - `models.go` 定义监测、诊断、节点租约、结果与版本协商。
 - `validate.go` 校验参数并填充默认值，执行器入口再次校验。
@@ -18,6 +18,8 @@ go get github.com/sihuangtech/probelune-contracts@v0.1.1
 - 各应用独立仓库、独立发布，不依赖相邻源码目录。
 
 协议 v1、模块 v0.1.0。兼容字段可增量添加；破坏性变更必须升级协议主版本。
+
+发布记录统一维护在 [GitHub Releases](https://github.com/sihuangtech/probelune-contracts/releases)。
 
 文档：[节点协议](docs/PROTOCOL.md)、[HTTP API](docs/API.md)、[JSON Schema](schemas/check.schema.json)、[OpenAPI](openapi.yaml)。
 

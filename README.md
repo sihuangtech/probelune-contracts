@@ -9,7 +9,7 @@ Versioned Go models, validation and network access policy for **Probelune (å·¡æ±
 Requires Go 1.27 or newer.
 
 ```sh
-go get github.com/sihuangtech/probelune-contracts@v0.1.1
+go get github.com/sihuangtech/probelune-contracts@v0.1.0
 ```
 
 ```go
@@ -28,7 +28,7 @@ if err := check.Validate(); err != nil {
 - [Check JSON Schema](schemas/check.schema.json)
 - [OpenAPI entry point](openapi.yaml)
 
-Go consumers import the tagged module. Vue, Electron and Flutter consume its JSON wire representation; they have independent application models and releases. There is no shared JavaScript workspace or sibling-directory dependency in published builds.
+The immutable `v0.1.0` tag provides the original v1 models. The current branch also includes the optional certificate-lifetime assertion; consumers requiring that field pin a commit using a Go-generated pseudo-version in `go.mod`. Vue, Electron and Flutter consume its JSON wire representation; they have independent application models and releases. There is no shared JavaScript workspace or sibling-directory dependency in published builds.
 
 Protocol version `1` rejects incompatible nodes at polling time. Additive optional fields may be introduced within v1; breaking wire changes require a new protocol major. Module releases follow semantic versioning and retain immutable tags.
 
@@ -39,6 +39,8 @@ go fmt ./...
 go vet ./...
 go test ./...
 ```
+
+Release notes are maintained in [GitHub Releases](https://github.com/sihuangtech/probelune-contracts/releases).
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) and [SECURITY.md](SECURITY.md). Licensed under GPL-3.0-or-later; see [LICENSE](LICENSE).
 
