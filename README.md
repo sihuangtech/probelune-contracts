@@ -4,20 +4,20 @@
 
 Versioned Go models, validation and network access policy for **Probelune (巡汐)**, a self-hosted multi-location monitoring system. This is a library and protocol specification, not a running service.
 
-## Probelune repositories
+## Explore Probelune
 
-Probelune consists of six repositories. This repository is **probelune-contracts**. Use the links below to find the other components.
+Contracts provide shared data definitions and validation for communication between the dashboard, probe nodes and clients.
 
-For a self-hosted installation, start with the dashboard and probe node. Mobile and desktop clients connect to that dashboard. Contracts provide shared definitions for development.
+To set up Probelune, start with the dashboard and a probe node, then connect the clients you use. The project overview has the architecture and deployment guides.
 
-| Repository | Purpose |
+| Component | What it provides |
 | --- | --- |
-| [probelune](https://github.com/sihuangtech/probelune) | Product overview, architecture and deployment guides |
-| [probelune-dashboard](https://github.com/sihuangtech/probelune-dashboard) | Web dashboard and Go API server |
-| [probelune-node](https://github.com/sihuangtech/probelune-node) | Probe executor for monitored networks |
-| [probelune-mobile](https://github.com/sihuangtech/probelune-mobile) | Flutter client for Android and iOS |
-| [probelune-desktop](https://github.com/sihuangtech/probelune-desktop) | Electron desktop client and diagnostic tools |
-| [probelune-contracts](https://github.com/sihuangtech/probelune-contracts) | Shared Go models, validation and API protocols |
+| [Project overview](https://github.com/sihuangtech/probelune) | Product overview, architecture and deployment guides |
+| [Dashboard](https://github.com/sihuangtech/probelune-dashboard) | Web dashboard and Go API server |
+| [Probe node](https://github.com/sihuangtech/probelune-node) | Probe executor for monitored networks |
+| [Mobile app](https://github.com/sihuangtech/probelune-mobile) | Flutter client for Android and iOS |
+| [Desktop app](https://github.com/sihuangtech/probelune-desktop) | Electron desktop client and diagnostic tools |
+| [Contracts](https://github.com/sihuangtech/probelune-contracts) | Shared Go models, validation and API protocols |
 
 
 ## Use
