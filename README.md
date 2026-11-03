@@ -54,3 +54,5 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) and [SECURITY.md](SECURITY.md). Licensed 
 - Developer: [Snake Konginchrist](https://github.com/Snake-Konginchrist)
 - Email: [developer@skstudio.cn](mailto:developer@skstudio.cn)
 - Feedback: [GitHub Issues](https://github.com/sihuangtech/probelune-contracts/issues)
+
+The maintainer republished `v0.1.0`. Existing public Go proxy/checksum records cannot be replaced. Consumers must fetch this module directly with `GONOPROXY=github.com/sihuangtech/probelune-contracts` and `GONOSUMDB=github.com/sihuangtech/probelune-contracts`, using a fresh module cache. The node and dashboard build scripts configure this automatically.
