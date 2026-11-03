@@ -65,12 +65,25 @@ func (c *Check) Validate() error {
 				return fmt.Errorf("无效请求头")
 			}
 		}
-	case "tcp", "ping", "dns", "mtr", "traceroute":
+	case "tcp", "udp", "ping", "dns", "mtr", "traceroute":
 		if !ValidHost(c.Target) {
 			return fmt.Errorf("请输入有效域名或 IP 地址")
 		}
-		if c.Type == "tcp" && (c.Port < 1 || c.Port > 65535) {
+		if (c.Type == "tcp" || c.Type == "udp") && (c.Port < 1 || c.Port > 65535) {
 			return fmt.Errorf("端口必须在 1—65535 之间")
+		}
+		if c.Type == "udp" {
+			if c.UDPEncoding == "" {
+				c.UDPEncoding = "text"
+			}
+			payload, err := UDPBytes(c.UDPPayload, c.UDPEncoding)
+			if err != nil || len(payload) == 0 || len(payload) > 1400 {
+				return fmt.Errorf("UDP 请求必须为 1—1400 字节的有效文本或十六进制数据")
+			}
+			expected, err := UDPBytes(c.UDPExpected, c.UDPEncoding)
+			if err != nil || len(expected) > 4096 {
+				return fmt.Errorf("UDP 期望响应必须使用相同编码且不超过 4096 字节")
+			}
 		}
 		if c.Type == "dns" && !strings.Contains("|A|AAAA|CNAME|MX|TXT|NS|SOA|", "|"+c.DNSRecord+"|") {
 			return fmt.Errorf("不支持的 DNS 类型")

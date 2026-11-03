@@ -79,6 +79,14 @@ paths:
       summary: Update monitor using current configuration version
       requestBody: {$ref: '#/components/requestBodies/Object'}
       responses: {'200': {$ref: '#/components/responses/JSON'}, '409': {$ref: '#/components/responses/Error'}}
+  /monitors/{id}/uptime:
+    parameters: [{$ref: '#/components/parameters/ID'}]
+    get:
+      summary: Availability cells with real coverage and configurable resolution
+      parameters:
+        - {in: query, name: hours, schema: {type: integer, minimum: 1, maximum: 720, default: 24}}
+        - {in: query, name: bucket_minutes, schema: {type: integer, minimum: 5, maximum: 1440, multipleOf: 5, default: 15}}
+      responses: {'200': {$ref: '#/components/responses/JSON'}, '400': {$ref: '#/components/responses/Error'}}
   /monitors/{id}/history:
     parameters: [{$ref: '#/components/parameters/ID'}]
     get:
@@ -112,6 +120,9 @@ paths:
   /diagnostics:
     get:
       summary: List recent jobs and results
+      parameters:
+        - {in: query, name: batch_id, schema: {type: string}}
+        - {in: query, name: monitor_id, schema: {type: string}}
       responses: {'200': {$ref: '#/components/responses/JSON'}}
     post:
       summary: Create one-off diagnostic jobs (admin/operator)
@@ -208,7 +219,10 @@ paths:
   /status:
     get:
       security: []
-      summary: Read explicitly public status information
+      summary: Read sanitized public status and configurable availability cells
+      parameters:
+        - {in: query, name: hours, schema: {type: integer, minimum: 1, maximum: 720, default: 24}}
+        - {in: query, name: bucket_minutes, schema: {type: integer, minimum: 5, maximum: 1440, multipleOf: 5, default: 15}}
       responses: {'200': {$ref: '#/components/responses/JSON'}, '404': {$ref: '#/components/responses/Error'}}
   /node/register:
     post:

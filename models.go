@@ -8,6 +8,9 @@ type Check struct {
 	Type               string            `json:"type"`
 	Target             string            `json:"target"`
 	Port               int               `json:"port"`
+	UDPPayload         string            `json:"udp_payload,omitempty"`
+	UDPEncoding        string            `json:"udp_encoding,omitempty"`
+	UDPExpected        string            `json:"udp_expected,omitempty"`
 	Timeout            int               `json:"timeout"`
 	Method             string            `json:"method"`
 	Headers            map[string]string `json:"headers,omitempty"`
@@ -60,6 +63,8 @@ type Assignment struct {
 
 type Job struct {
 	ID        string `json:"id"`
+	BatchID   string `json:"batch_id,omitempty"`
+	MonitorID string `json:"monitor_id,omitempty"`
 	NodeID    string `json:"node_id"`
 	Check     Check  `json:"check"`
 	Policy    Policy `json:"policy"`

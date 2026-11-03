@@ -54,3 +54,13 @@ Monitor fields are specified in `models.go`. Continuous types: HTTP, TCP, ICMP (
 Webhook receivers verify `X-Probelune-Signature` according to the dashboard notification implementation and reject stale timestamps. SMTP requires TLS or STARTTLS. FCM uses the deployer's Firebase service account; native clients must belong to the same Firebase project. No shared hosted push service is provided.
 
 Login/pair responses and overview include a stable `instance_id` for matching native notifications across LAN/public URL aliases. It is not a credential. Notification channels accept `reminder_minutes` (0 disables; 1–1440); maintenance/silence and confirmed recovery suppress further reminders.
+
+## Configurable availability history and UDP
+
+Protocol v1 adds optional `udp_payload`, `udp_encoding` (`text` or `hex`) and `udp_expected` fields. UDP requires a valid host, port and a 1–1400-byte decoded request. Success requires a non-empty reply; a configured expected byte sequence must occur in the response. A timeout means no response was observed, not proof that the port is closed. Nodes advertise `udp`; upgrade probes before assigning UDP checks. Responses larger than 4096 bytes fail validation rather than silently passing a partial assertion.
+
+`GET /monitors/:id/uptime` and the public `GET /status` accept `hours` (1–720, default 24) and `bucket_minutes` (5–1440 in multiples of 5, default 15), bounded to 2016 cells. Each cell includes success/failure/executor-error counts, expected samples, availability and coverage. Missing history remains unknown; archived five-minute samples remain visible. Availability is the proportion of successful observed target checks, not a time-based SLA or confirmed incident duration. Coverage uses enabled configuration versions and includes offline gaps. Public responses exclude targets, node identities, raw evidence and incident notes.
+
+`GET /monitors/:id/history` accepts `from`, `until` (Unix seconds), `status`, `stage`, `node_id`, `limit` and `offset`; `total` counts matching raw results. Raw-result filters do not change the time/node summary.
+
+Diagnostic jobs now carry optional `batch_id` and `monitor_id`. Creating a multi-node run is atomic; query `/diagnostics?batch_id=...` to retrieve the whole run without unrelated jobs. Existing clients may ignore these additive fields.
