@@ -6,7 +6,7 @@ Versioned Go models, validation and network access policy for **Probelune (å·¡æ±
 
 ## Use
 
-Requires Go 1.27 or newer.
+Requires Go 1.27 or newer. The node and dashboard build scripts configure the module environment for consumers. Standalone integration settings are described in the [protocol documentation](docs/PROTOCOL.md).
 
 ```sh
 go get github.com/sihuangtech/probelune-contracts@v0.1.0
@@ -19,7 +19,7 @@ if err := check.Validate(); err != nil {
 }
 ```
 
-`models.go` defines checks, monitors, expiring assignments, diagnostics and results. `validate.go` normalizes defaults and validates executor inputs. `network.go` validates all DNS answers before dialing a pinned IP; private/special networks require explicit CIDRs. Neither nodes nor the dashboard execute caller-supplied shell commands.
+`check.go` defines the check catalog and required capabilities; `models.go` defines monitors, expiring assignments, diagnostics and results. `validate.go` normalizes defaults and validates executor inputs. `network.go` validates all DNS answers before dialing a pinned IP; private/special networks require explicit CIDRs. Neither nodes nor the dashboard execute caller-supplied shell commands.
 
 ## Protocol
 
@@ -28,7 +28,7 @@ if err := check.Validate(); err != nil {
 - [Check JSON Schema](schemas/check.schema.json)
 - [OpenAPI entry point](openapi.yaml)
 
-All repositories and Go dependencies use `v0.1.0`, including certificate-lifetime assertions. The maintainer explicitly republished this tag with the current implementation. Release notes are maintained on GitHub; local changelogs are removed and ignored.
+Checks include HTTP/HTTPS, TCP, UDP, ICMP, DNS and route diagnostics. The protocol carries node capabilities, configurable schedules, diagnostic runs and historical availability summaries. Applications consume the shared JSON wire representation while keeping their own user interfaces.
 
 Protocol version `1` rejects incompatible nodes at polling time. Additive optional fields may be introduced within v1; breaking wire changes require a new protocol major. Module releases follow semantic versioning.
 
@@ -54,5 +54,3 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) and [SECURITY.md](SECURITY.md). Licensed 
 - Developer: [Snake Konginchrist](https://github.com/Snake-Konginchrist)
 - Email: [developer@skstudio.cn](mailto:developer@skstudio.cn)
 - Feedback: [GitHub Issues](https://github.com/sihuangtech/probelune-contracts/issues)
-
-The maintainer republished `v0.1.0`. Existing public Go proxy/checksum records cannot be replaced. Consumers must fetch this module directly with `GONOPROXY=github.com/sihuangtech/probelune-contracts` and `GONOSUMDB=github.com/sihuangtech/probelune-contracts`, using a fresh module cache. The node and dashboard build scripts configure this automatically.

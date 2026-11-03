@@ -58,3 +58,16 @@ Protocol v1 adds optional `udp_payload`, `udp_encoding` (`text` or `hex`) and `u
 `GET /monitors/:id/history` accepts `from`, `until` (Unix seconds), `status`, `stage`, `node_id`, `limit` and `offset`; `total` counts matching raw results. Raw-result filters do not change the time/node summary.
 
 Diagnostic jobs now carry optional `batch_id` and `monitor_id`. Creating a multi-node run is atomic; query `/diagnostics?batch_id=...` to retrieve the whole run without unrelated jobs. Existing clients may ignore these additive fields.
+
+## Go module integration
+
+The applications source their repository-root `scripts/go-env.sh` before standalone Go builds. For a separate consumer, scope direct fetching and checksum-database policy to the contracts module and use a project-local cache:
+
+```sh
+export GONOPROXY=github.com/sihuangtech/probelune-contracts
+export GONOSUMDB=github.com/sihuangtech/probelune-contracts
+export GOMODCACHE="$PWD/.cache/go-mod-v0.1.0"
+go get github.com/sihuangtech/probelune-contracts@v0.1.0
+```
+
+Commit `go.sum` and keep checksum verification for all other modules. The application build helpers refresh only their project-local contracts cache when its checksum differs from the committed checksum.

@@ -61,6 +61,10 @@ paths:
           application/json:
             schema: {type: object, required: [code], properties: {code: {type: string}}}
       responses: {'200': {$ref: '#/components/responses/JSON'}, '401': {$ref: '#/components/responses/Error'}}
+  /check-types:
+    get:
+      summary: Read shared check catalog and continuous-monitor classification
+      responses: {'200': {$ref: '#/components/responses/JSON'}}
   /overview:
     get:
       summary: Read current observation network

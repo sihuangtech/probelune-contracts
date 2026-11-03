@@ -46,7 +46,7 @@ func (c *Check) Validate() error {
 		return fmt.Errorf("证书剩余天数阈值应为 0—365；0 表示关闭")
 	}
 	switch c.Type {
-	case "http":
+	case TypeHTTP:
 		u, err := url.Parse(c.Target)
 		if err != nil || (u.Scheme != "http" && u.Scheme != "https") || u.User != nil || !ValidHost(u.Hostname()) || u.Fragment != "" {
 			return fmt.Errorf("请输入有效的 HTTP/HTTPS URL（不含用户凭据和片段）")
@@ -65,14 +65,14 @@ func (c *Check) Validate() error {
 				return fmt.Errorf("无效请求头")
 			}
 		}
-	case "tcp", "udp", "ping", "dns", "mtr", "traceroute":
+	case TypeTCP, TypeUDP, TypePing, TypeDNS, TypeMTR, TypeTraceroute:
 		if !ValidHost(c.Target) {
 			return fmt.Errorf("请输入有效域名或 IP 地址")
 		}
-		if (c.Type == "tcp" || c.Type == "udp") && (c.Port < 1 || c.Port > 65535) {
+		if (c.Type == TypeTCP || c.Type == TypeUDP) && (c.Port < 1 || c.Port > 65535) {
 			return fmt.Errorf("端口必须在 1—65535 之间")
 		}
-		if c.Type == "udp" {
+		if c.Type == TypeUDP {
 			if c.UDPEncoding == "" {
 				c.UDPEncoding = "text"
 			}
@@ -85,7 +85,7 @@ func (c *Check) Validate() error {
 				return fmt.Errorf("UDP 期望响应必须使用相同编码且不超过 4096 字节")
 			}
 		}
-		if c.Type == "dns" && !strings.Contains("|A|AAAA|CNAME|MX|TXT|NS|SOA|", "|"+c.DNSRecord+"|") {
+		if c.Type == TypeDNS && !strings.Contains("|A|AAAA|CNAME|MX|TXT|NS|SOA|", "|"+c.DNSRecord+"|") {
 			return fmt.Errorf("不支持的 DNS 类型")
 		}
 	default:
@@ -97,4 +97,19 @@ func (c *Check) Validate() error {
 func RunID(monitor, node string, version int, at int64) string {
 	sum := sha256.Sum256([]byte(fmt.Sprintf("%s:%s:%d:%d", monitor, node, version, at)))
 	return hex.EncodeToString(sum[:])
+}
+
+// UDPBytes decodes a bounded user-supplied datagram or response assertion.
+func UDPBytes(value, encoding string) ([]byte, error) {
+	if len(value) > 16384 {
+		return nil, fmt.Errorf("UDP data is too large")
+	}
+	switch encoding {
+	case "", "text":
+		return []byte(value), nil
+	case "hex":
+		return hex.DecodeString(strings.Join(strings.Fields(value), ""))
+	default:
+		return nil, fmt.Errorf("UDP encoding must be text or hex")
+	}
 }

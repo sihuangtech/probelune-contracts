@@ -12,7 +12,7 @@ go get github.com/sihuangtech/probelune-contracts@v0.1.0
 
 所有仓库统一使用 `v0.1.0`，包含证书剩余有效期检查字段。
 - 网页、桌面和 Flutter 按相同 JSON 协议通信，各自维护适合本端的模型。
-- `models.go` 定义监测、诊断、节点租约、结果与版本协商。
+- `check.go` 定义检测类型、配置与能力要求；`models.go` 定义监测、诊断、节点租约、结果与版本协商。
 - `validate.go` 校验参数并填充默认值，执行器入口再次校验。
 - `network.go` 校验解析 IP、拦截默认禁止的私网地址，并固定实际拨号 IP。
 - 各应用独立仓库、独立发布，不依赖相邻源码目录。
