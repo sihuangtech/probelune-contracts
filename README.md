@@ -4,6 +4,22 @@
 
 Versioned Go models, validation and network access policy for **Probelune (巡汐)**, a self-hosted multi-location monitoring system. This is a library and protocol specification, not a running service.
 
+## Probelune repositories
+
+Probelune consists of six repositories. This repository is **probelune-contracts**. Use the links below to find the other components.
+
+For a self-hosted installation, start with the dashboard and probe node. Mobile and desktop clients connect to that dashboard. Contracts provide shared definitions for development.
+
+| Repository | Purpose |
+| --- | --- |
+| [probelune](https://github.com/sihuangtech/probelune) | Product overview, architecture and deployment guides |
+| [probelune-dashboard](https://github.com/sihuangtech/probelune-dashboard) | Web dashboard and Go API server |
+| [probelune-node](https://github.com/sihuangtech/probelune-node) | Probe executor for monitored networks |
+| [probelune-mobile](https://github.com/sihuangtech/probelune-mobile) | Flutter client for Android and iOS |
+| [probelune-desktop](https://github.com/sihuangtech/probelune-desktop) | Electron desktop client and diagnostic tools |
+| [probelune-contracts](https://github.com/sihuangtech/probelune-contracts) | Shared Go models, validation and API protocols |
+
+
 ## Use
 
 Requires Go 1.27 or newer. Integration settings are described in the [protocol documentation](docs/PROTOCOL.md).

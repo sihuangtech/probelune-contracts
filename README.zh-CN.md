@@ -29,6 +29,22 @@ go get github.com/sihuangtech/probelune-contracts@v0.1.1
 开发检查：`go fmt ./...`、`go vet ./...`、`go test ./...`。协议说明以英文为主，代码含必要中文注释。贡献与安全报告方式见 [CONTRIBUTING.md](CONTRIBUTING.md)、[SECURITY.md](SECURITY.md)。许可证为 GPL-3.0-or-later。
 
 
+## Probelune 项目仓库
+
+Probelune 由六个仓库组成，当前仓库是 **probelune-contracts**。可通过下表了解并访问其他组件。
+
+自部署时从网页面板和探测节点开始，移动端与桌面端连接同一个面板，协议仓库为开发者提供共享定义。
+
+| 仓库 | 用途 |
+| --- | --- |
+| [probelune](https://github.com/sihuangtech/probelune) | 项目总览、架构与部署指南 |
+| [probelune-dashboard](https://github.com/sihuangtech/probelune-dashboard) | 网页控制台与 Go API 服务端 |
+| [probelune-node](https://github.com/sihuangtech/probelune-node) | 部署在监测网络中的探测执行器 |
+| [probelune-mobile](https://github.com/sihuangtech/probelune-mobile) | Flutter Android 与 iOS 移动客户端 |
+| [probelune-desktop](https://github.com/sihuangtech/probelune-desktop) | Electron 桌面客户端与诊断工具 |
+| [probelune-contracts](https://github.com/sihuangtech/probelune-contracts) | 共享 Go 数据结构、参数校验与接口协议 |
+
+
 ## 星标历史
 
 [![星标历史](https://api.star-history.com/svg?repos=sihuangtech/probelune-contracts&type=Date)](https://star-history.com/#sihuangtech/probelune-contracts&Date)
