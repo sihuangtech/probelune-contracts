@@ -6,10 +6,13 @@ Versioned Go models, validation and network access policy for **Probelune (å·¡æ±
 
 ## Use
 
-Requires Go 1.27 or newer. The node and dashboard build scripts configure the module environment for consumers. Standalone integration settings are described in the [protocol documentation](docs/PROTOCOL.md).
+Requires Go 1.27 or newer. Integration settings are described in the [protocol documentation](docs/PROTOCOL.md).
 
 ```sh
-go get github.com/sihuangtech/probelune-contracts@v0.1.0
+export GONOPROXY=github.com/sihuangtech/probelune-contracts
+export GONOSUMDB=github.com/sihuangtech/probelune-contracts
+export GOMODCACHE="$PWD/.cache/go-mod-v0.1.1"
+go get github.com/sihuangtech/probelune-contracts@v0.1.1
 ```
 
 ```go

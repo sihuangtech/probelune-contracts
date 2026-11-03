@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: Probelune Dashboard and Node API
-  version: 0.1.0
+  version: 0.1.1
   description: Wire reference for protocol v1. See docs/API.md and docs/PROTOCOL.md for roles, state semantics and field definitions.
   license:
     name: GPL-3.0-or-later

@@ -61,13 +61,13 @@ Diagnostic jobs now carry optional `batch_id` and `monitor_id`. Creating a multi
 
 ## Go module integration
 
-The applications source their repository-root `scripts/go-env.sh` before standalone Go builds. For a separate consumer, scope direct fetching and checksum-database policy to the contracts module and use a project-local cache:
+Node and dashboard build scripts configure a project-local module cache and scope direct fetching/checksum-database policy to this module. Standalone consumers use:
 
 ```sh
 export GONOPROXY=github.com/sihuangtech/probelune-contracts
 export GONOSUMDB=github.com/sihuangtech/probelune-contracts
-export GOMODCACHE="$PWD/.cache/go-mod-v0.1.0"
-go get github.com/sihuangtech/probelune-contracts@v0.1.0
+export GOMODCACHE="$PWD/.cache/go-mod-v0.1.1"
+go get github.com/sihuangtech/probelune-contracts@v0.1.1
 ```
 
-Commit `go.sum` and keep checksum verification for all other modules. The application build helpers refresh only their project-local contracts cache when its checksum differs from the committed checksum.
+Commit `go.sum`; all other dependencies retain standard proxy and checksum-database verification. Existing public records for an earlier tag cannot be replaced.
